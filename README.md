@@ -1,5 +1,5 @@
 # NetworkAPI
-API for "New Friend Network”
+API for "New Friend Network”, built with Python (3.7.4) and Flask (2.0.1)
 
 Given a list of relationships: “Bob knows Alice”, “Alice knows Fred”, “Fred knows Ganesh”. 
 
@@ -116,6 +116,7 @@ Response
 }
 
 ````
+
 ### Add friend (Karl) to person (Fred) in network
 ````Bash
 curl -X PUT -H "Content-Type: application/json" -d "{\"friend\":\"Karl\"}" http://localhost:5000/api/v1/resources/network/3
@@ -126,6 +127,19 @@ Response
 {
   "status": 200,
   "message": "Requested friend added to person"
+}
+````
+
+### Remove friend (Karl) from person (Fred) in network
+````Bash
+curl -X DELETE -H "Content-Type: application/json" -d "{\"friend\":\"Karl\"}" http://localhost:5000/api/v1/resources/network/3
+````
+
+Response
+````Bash
+{
+  "status": 200,
+  "message": "Requested friend removed from person"
 }
 ````
 
