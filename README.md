@@ -8,7 +8,7 @@ Design an API to include:
 - Removing friends
 - Listing Friends of friends. eg Bob  “friend of a friend”  is [“Fred”]
 
-## Assumptions
+## Constraints
 
 - No duplicate entries in initial list
 - Names are case sensitive
@@ -119,7 +119,7 @@ Response
 
 ### Add friend (Karl) to person (Fred) in network
 ````Bash
-curl -X PUT -H "Content-Type: application/json" -d "{\"friend\":\"Karl\"}" http://localhost:5000/api/v1/resources/network/3
+curl -X PUT -H 'Content-Type: application/json' -d '{"friend":"Karl"}' http://127.0.0.1:5000/api/v1/resources/network/3
 ````
 
 Response
@@ -132,7 +132,7 @@ Response
 
 ### Remove friend (Karl) from person (Fred) in network
 ````Bash
-curl -X DELETE -H "Content-Type: application/json" -d "{\"friend\":\"Karl\"}" http://localhost:5000/api/v1/resources/network/3
+curl -X DELETE -H 'Content-Type: application/json' -d '{"friend":"Karl"}' http://127.0.0.1:5000/api/v1/resources/network/3
 ````
 
 Response
