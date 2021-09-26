@@ -1,12 +1,15 @@
-import unittest, json, app
+import unittest
+import json
+import app
 from copy import deepcopy
 
 BASE_URL = 'http://127.0.0.1:5000/api/v1/resources/network'
-MISSING_ITEM_URL = '{}/5'.format(BASE_URL) # N/A
-EXISTING_ITEM_URL = '{}/3'.format(BASE_URL) # Fred 
+MISSING_ITEM_URL = '{}/5'.format(BASE_URL)  # N/A
+EXISTING_ITEM_URL = '{}/3'.format(BASE_URL)  # Fred
 
 # All tests are based on the following initial relationships list
-# relationships = ["Bob knows Alice", "Alice knows Fred", "Fred knows Ganesh"]
+# relationships = ['Bob knows Alice', 'Alice knows Fred', 'Fred knows Ganesh']
+
 
 class test_network_api(unittest.TestCase):
 
@@ -25,7 +28,7 @@ class test_network_api(unittest.TestCase):
 
     # Function to test adding a friend to the network
     def test_add(self):
-        payload = {"friend": "Josh"}
+        payload = {'friend': 'Josh'}
         response = self.app.put(EXISTING_ITEM_URL,
                                 data=json.dumps(payload),
                                 content_type='application/json')
@@ -39,32 +42,32 @@ class test_network_api(unittest.TestCase):
 
         # Test friend was added to second person item
         self.assertEqual(data['network'][4]['friends'], ['Fred'])
-    
+
     # Function to test errors when adding a friend
     def test_add_error(self):
         # Test cannot add non-existing item
-        payload = {"friend": "Josh"}
+        payload = {'friend': 'Josh'}
         response = self.app.put(MISSING_ITEM_URL,
                                 data=json.dumps(payload),
                                 content_type='application/json')
         self.assertEqual(response.status_code, 404)
 
         # Test invalid friend field
-        payload = {"person": "Josh"}
+        payload = {'person': 'Josh'}
         response = self.app.put(EXISTING_ITEM_URL,
                                 data=json.dumps(payload),
                                 content_type='application/json')
         self.assertEqual(response.status_code, 400)
 
         # Test same person
-        payload = {"friend": "Fred"}
+        payload = {'friend': 'Fred'}
         response = self.app.put(EXISTING_ITEM_URL,
                                 data=json.dumps(payload),
                                 content_type='application/json')
         self.assertEqual(response.status_code, 409)
 
-        # Test exisiting friend 
-        payload = {"friend": "Ganesh"}
+        # Test exisiting friend
+        payload = {'friend': 'Ganesh'}
         response = self.app.put(EXISTING_ITEM_URL,
                                 data=json.dumps(payload),
                                 content_type='application/json')
@@ -72,7 +75,7 @@ class test_network_api(unittest.TestCase):
 
     # Function to test removal of friend
     def test_remove(self):
-        payload = {"friend": "Ganesh"}
+        payload = {'friend': 'Ganesh'}
         response = self.app.delete(EXISTING_ITEM_URL,
                                 data=json.dumps(payload),
                                 content_type='application/json')
@@ -89,16 +92,15 @@ class test_network_api(unittest.TestCase):
 
     # Function to test errors when removing a friend
     def test_remove_error(self):
-
         # Test friend that does not exist
-        payload = {"friend": "Josh"}
+        payload = {'friend': 'Josh'}
         response = self.app.delete(EXISTING_ITEM_URL,
                                 data=json.dumps(payload),
                                 content_type='application/json')
         self.assertEqual(response.status_code, 404)
 
         # Test cannot remove non-existing person
-        payload = {"friend": "Josh"}
+        payload = {'friend': 'Josh'}
         response = self.app.delete(MISSING_ITEM_URL,
                                 data=json.dumps(payload),
                                 content_type='application/json')
@@ -106,7 +108,6 @@ class test_network_api(unittest.TestCase):
 
     # Function to test person id thats not available
     def test_item_not_exist(self):
-        
         response = self.app.get(MISSING_ITEM_URL)
         self.assertEqual(response.status_code, 404)
 
@@ -122,5 +123,5 @@ class test_network_api(unittest.TestCase):
         # reset app.network to initial state
         app.network = self.backup_network
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
