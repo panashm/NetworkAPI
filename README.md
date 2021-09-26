@@ -8,7 +8,7 @@ Design an API to include:
 - Removing friends
 - Listing Friends of friends. eg Bob  “friend of a friend”  is [“Fred”]
 
-## Assumptions
+## Constraints
 
 - No duplicate entries in initial list
 - Names are case sensitive
