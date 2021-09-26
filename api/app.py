@@ -187,6 +187,3 @@ create_network(relationships)
 
 if __name__ == '__main__':
     app.run()
-
-# case sensitivity
-# docs, testing

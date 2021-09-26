@@ -56,12 +56,19 @@ class test_network_api(unittest.TestCase):
                                 content_type='application/json')
         self.assertEqual(response.status_code, 400)
 
-        # Test test same person
-        payload = {"person": "Fred"}
+        # Test same person
+        payload = {"friend": "Fred"}
         response = self.app.put(EXISTING_ITEM_URL,
                                 data=json.dumps(payload),
                                 content_type='application/json')
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 409)
+
+        # Test exisiting friend 
+        payload = {"friend": "Ganesh"}
+        response = self.app.put(EXISTING_ITEM_URL,
+                                data=json.dumps(payload),
+                                content_type='application/json')
+        self.assertEqual(response.status_code, 409)
 
     # Function to test removal of friend
     def test_remove(self):
@@ -82,16 +89,17 @@ class test_network_api(unittest.TestCase):
 
     # Function to test errors when removing a friend
     def test_remove_error(self):
-        # Test cannot remove non-existing item
-        payload = {"friend": "Josh"}
-        response = self.app.delete(MISSING_ITEM_URL,
-                                data=json.dumps(payload),
-                                content_type='application/json')
-        self.assertEqual(response.status_code, 404)
 
         # Test friend that does not exist
         payload = {"friend": "Josh"}
         response = self.app.delete(EXISTING_ITEM_URL,
+                                data=json.dumps(payload),
+                                content_type='application/json')
+        self.assertEqual(response.status_code, 404)
+
+        # Test cannot remove non-existing person
+        payload = {"friend": "Josh"}
+        response = self.app.delete(MISSING_ITEM_URL,
                                 data=json.dumps(payload),
                                 content_type='application/json')
         self.assertEqual(response.status_code, 404)
